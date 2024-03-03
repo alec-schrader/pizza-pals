@@ -27,36 +27,39 @@ export default function Login() {
     }
 
     return (
-        <View style={styles.container}>
+        <View>
             <Appbar.Header>
                 <Link href="/login" asChild>
                     <Appbar.BackAction onPress={() => { }} />
                 </Link>
-                
+
                 <Appbar.Content title="Sign Up" />
             </Appbar.Header>
-            <View style={[styles.verticallySpaced, styles.mt20]}>
-                <TextInput
-                    label="Email"
-                    left={<TextInput.Icon icon="email" />}
-                    onChangeText={(text) => setEmail(text)}
-                    value={email}
-                    placeholder="email@address.com"
-                />
+            <View style={styles.container}>
+                <View style={[styles.verticallySpaced, styles.mt20]}>
+                    <TextInput
+                        label="Email"
+                        left={<TextInput.Icon icon="email" />}
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                        placeholder="email@address.com"
+                    />
+                </View>
+                <View style={styles.verticallySpaced}>
+                    <TextInput
+                        label="Password"
+                        left={<TextInput.Icon icon="lock" />}
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        secureTextEntry={true}
+                        placeholder="Password"
+                    />
+                </View>
+                <View style={[styles.verticallySpaced, styles.mt20]}>
+                    <Button disabled={loading} onPress={() => signUpWithEmail()} mode="contained">Sign Up</Button>
+                </View>
             </View>
-            <View style={styles.verticallySpaced}>
-                <TextInput
-                    label="Password"
-                    left={<TextInput.Icon icon="lock" />}
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                    placeholder="Password"
-                />
-            </View>
-            <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Button disabled={loading} onPress={() => signUpWithEmail()} mode="contained">Sign Up</Button>
-            </View>
+
         </View>
     )
 }
