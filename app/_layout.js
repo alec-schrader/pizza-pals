@@ -3,13 +3,13 @@ import {
     MD3LightTheme as DefaultTheme,
     PaperProvider,
 } from 'react-native-paper';
-import { theme } from '../utils/theme'
+import { darkTheme } from '../utils/theme'
 
 export default function Root() {
 
     const appTheme = {
         ...DefaultTheme,
-        colors: theme.colors, // Copy it from the color codes scheme and then use it here
+        colors: darkTheme.colors, // Copy it from the color codes scheme and then use it here
     };
 
     return (
