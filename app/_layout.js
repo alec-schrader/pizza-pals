@@ -4,12 +4,16 @@ import {
     PaperProvider,
 } from 'react-native-paper';
 import { darkTheme } from '../utils/theme'
+import * as SystemUI from 'expo-system-ui';
+
 
 export default function Root() {
 
+    SystemUI.setBackgroundColorAsync("black");
+
     const appTheme = {
         ...DefaultTheme,
-        colors: darkTheme.colors, // Copy it from the color codes scheme and then use it here
+        colors: darkTheme.colors,
     };
 
     return (
