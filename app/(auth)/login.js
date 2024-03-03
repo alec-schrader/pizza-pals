@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
-import { Button, Input } from 'react-native-elements'
+import { Button, TextInput } from 'react-native-paper'
 import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
 import { router } from 'expo-router';
 
-export default function Page() {
+export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -33,39 +33,36 @@ export default function Page() {
         })
 
         if (error) console.error(error)
-        //if (!session) Alert.alert('Please check your inbox for email verification!')
+        router.replace('/')
 
-        console.log(data)
     }
 
     return (
         <View style={styles.container}>
             <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Input
+                <TextInput
                     label="Email"
-                    leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+                    left={<TextInput.Icon icon="email" />}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     placeholder="email@address.com"
-                    autoCapitalize={'none'}
                 />
             </View>
             <View style={styles.verticallySpaced}>
-                <Input
+                <TextInput
                     label="Password"
-                    leftIcon={{ type: 'font-awesome', name: 'lock' }}
+                    left={<TextInput.Icon icon="lock" />}
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     secureTextEntry={true}
                     placeholder="Password"
-                    autoCapitalize={'none'}
                 />
             </View>
             <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Button title="Sign in" disabled={loading} onPress={() => signInWithEmail()} />
+                <Button disabled={loading} onPress={() => signInWithEmail()} mode="contained">Sign In</Button>
             </View>
             <View style={styles.verticallySpaced}>
-                <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
+                <Button disabled={loading} onPress={() => signUpWithEmail()}>Sign up</Button>
             </View>
         </View>
     )

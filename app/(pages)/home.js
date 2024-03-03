@@ -5,22 +5,19 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
 
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-paper'
 
 
-export default function Page() {
+export default function Home() {
     const [session, setSession] = useState(null)
-    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             setSession(session)
-            setLoggedIn(!!session)
         })
 
         supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session)
-            setLoggedIn(!!session)
         })
     }, [])
 
@@ -30,16 +27,10 @@ export default function Page() {
             {/* ...other links */}
             <View style={[styles.verticallySpaced, styles.mt20]}>
 
-            {loggedIn ? (
-                <Link href="/logout" asChild>
-                    <Button title="Logout" />
-                </Link>
+            <Link href="/logout" asChild>
+                <Button mode="contained">Logout</Button>
+            </Link>
 
-            ) : (
-                <Link href="/login" asChild>
-                    <Button title="Login" />
-                </Link>
-            )}
             </View>
         </View>
     );

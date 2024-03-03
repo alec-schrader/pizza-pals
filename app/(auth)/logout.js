@@ -3,7 +3,7 @@ import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
 import { router } from 'expo-router';
 
-export default function Page() {
+export default function Logout() {
 
     async function signOut() {
         const { error } = await supabase.auth.signOut()
