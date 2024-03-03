@@ -21,27 +21,27 @@ export default function Home() {
         })
     }, [])
 
-    const MusicRoute = () => <Text>Music</Text>;
+const MusicRoute = () => <Text>Home</Text>;
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const AlbumsRoute = () => <Text>Pals</Text>;
 
-const RecentsRoute = () => <Text>Recents</Text>;
+const RecentsRoute = () => <Text>Rankings</Text>;
 
-const NotificationsRoute = () => <Text>Notifications</Text>;
+const NotificationsRoute = () => <Text>Menu</Text>;
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-      { key: 'music', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
-      { key: 'albums', title: 'Albums', focusedIcon: 'album' },
-      { key: 'recents', title: 'Recents', focusedIcon: 'history' },
-      { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
+      { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home'},
+      { key: 'pals', title: 'Pals', focusedIcon: 'account-group' },
+      { key: 'rankings', title: 'Rankings', focusedIcon: 'pizza' },
+      { key: 'menu', title: 'More', focusedIcon: 'menu', unfocusedIcon: 'menu' },
     ]);
   
     const renderScene = BottomNavigation.SceneMap({
-      music: MusicRoute,
-      albums: AlbumsRoute,
-      recents: RecentsRoute,
-      notifications: NotificationsRoute,
+      home: MusicRoute,
+      pals: AlbumsRoute,
+      rankings: RecentsRoute,
+      menu: NotificationsRoute,
     });
 
     return (
