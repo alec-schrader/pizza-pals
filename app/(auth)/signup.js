@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'expo-router';
+import { Stack } from 'expo-router';
 
-import { View } from 'react-native'
-import { Button, TextInput, Appbar } from 'react-native-paper'
+import { View, Text } from 'react-native'
+import { Button, TextInput, Dialog } from 'react-native-paper'
 import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
 import { router } from 'expo-router';
@@ -11,8 +11,14 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const [dialogText, setDialogText] = useState('');
+
+    const showDialog = () => setVisible(true);
+    const hideDialog = () => setVisible(false);
 
     async function signUpWithEmail() {
+        setLoading(true)
         const {
             data: { session },
             error,
@@ -20,21 +26,24 @@ export default function Login() {
             email: email,
             password: password,
         })
-
-        if (error) console.error(error)
+        setLoading(false)
+        if (error) {
+            setDialogText(error)
+            setVisible(true)
+            return
+        }
         router.replace('/')
 
     }
 
     return (
-        <View>
-            <Appbar.Header>
-                <Link href="/login" asChild>
-                    <Appbar.BackAction onPress={() => { }} />
-                </Link>
+        <>
+            <Stack.Screen
+                options={{
+                    headerTitle: "Login",
+                }}
+            />
 
-                <Appbar.Content title="Sign Up" />
-            </Appbar.Header>
             <View style={styles.container}>
                 <View style={[styles.verticallySpaced, styles.mt20]}>
                     <TextInput
@@ -59,7 +68,15 @@ export default function Login() {
                     <Button disabled={loading} onPress={() => signUpWithEmail()} mode="contained">Sign Up</Button>
                 </View>
             </View>
-
-        </View>
+            <Dialog visible={visible} onDismiss={hideDialog}>
+                <Dialog.Title>Alert</Dialog.Title>
+                <Dialog.Content>
+                    <Text variant="bodyMedium">{dialogText}</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Button onPress={hideDialog}>OK</Button>
+                </Dialog.Actions>
+            </Dialog>
+        </>
     )
 }
