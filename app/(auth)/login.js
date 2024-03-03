@@ -5,7 +5,7 @@ import { Alert, StyleSheet, View } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 
 export default function Login() {
     const [email, setEmail] = useState('')
@@ -15,10 +15,10 @@ export default function Login() {
     async function signInWithEmail() {
         setLoading(true)
         const { error } = await supabase.auth.signInWithPassword({
-          email: email,
-          password: password,
+            email: email,
+            password: password,
         })
-    
+
         if (error) Alert.alert(error.message)
         setLoading(false)
 
@@ -26,34 +26,42 @@ export default function Login() {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={[styles.verticallySpaced, styles.mt20]}>
-                <TextInput
-                    label="Email"
-                    left={<TextInput.Icon icon="email" />}
-                    onChangeText={(text) => setEmail(text)}
-                    value={email}
-                    placeholder="email@address.com"
-                />
+        <>
+            <Stack.Screen
+                options={{
+                    headerTitle: "Login",
+                }}
+            />
+            <View style={styles.container}>
+                <View style={[styles.verticallySpaced, styles.mt20]}>
+                    <TextInput
+                        label="Email"
+                        left={<TextInput.Icon icon="email" />}
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                        placeholder="email@address.com"
+                    />
+                </View>
+                <View style={styles.verticallySpaced}>
+                    <TextInput
+                        label="Password"
+                        left={<TextInput.Icon icon="lock" />}
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        secureTextEntry={true}
+                        placeholder="Password"
+                    />
+                </View>
+                <View style={[styles.verticallySpaced, styles.mt20]}>
+                    <Button disabled={loading} onPress={() => signInWithEmail()} mode="contained">Sign In</Button>
+                </View>
+                <View style={styles.verticallySpaced}>
+                    <Link href="/signup" asChild>
+                        <Button>Sign up</Button>
+                    </Link>
+                </View>
             </View>
-            <View style={styles.verticallySpaced}>
-                <TextInput
-                    label="Password"
-                    left={<TextInput.Icon icon="lock" />}
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                    placeholder="Password"
-                />
-            </View>
-            <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Button disabled={loading} onPress={() => signInWithEmail()} mode="contained">Sign In</Button>
-            </View>
-            <View style={styles.verticallySpaced}>
-                <Link href="/signup" asChild>
-                    <Button>Sign up</Button>
-                </Link>
-            </View>
-        </View>
+
+        </>
     )
 }
