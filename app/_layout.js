@@ -9,7 +9,7 @@ import * as SystemUI from 'expo-system-ui';
 
 export default function Root() {
 
-    SystemUI.setBackgroundColorAsync("black");
+    SystemUI.setBackgroundColorAsync("#5b737d");
 
     const appTheme = {
         ...DefaultTheme,
