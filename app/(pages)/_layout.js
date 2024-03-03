@@ -32,4 +32,6 @@ export default function AuthLayout() {
 
     // This layout can be deferred because it's not the root layout.
     return <Slot />;
+
+    
 }
