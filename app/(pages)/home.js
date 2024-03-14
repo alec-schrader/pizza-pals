@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../utils/supabase'
 import { styles } from '../../utils/styles'
 
-import { Button } from 'react-native-paper'
+import { Button,BottomNavigation } from 'react-native-paper'
 
 
 export default function Home() {
@@ -64,8 +64,31 @@ export default function Home() {
         }
     }
 
+const MusicRoute = () => <Text>Home</Text>;
+
+const AlbumsRoute = () => <Text>Pals</Text>;
+
+const RecentsRoute = () => <Text>Rankings</Text>;
+
+const NotificationsRoute = () => <Text>Menu</Text>;
+
+    const [index, setIndex] = useState(0);
+    const [routes] = useState([
+      { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home'},
+      { key: 'pals', title: 'Pals', focusedIcon: 'account-group' },
+      { key: 'rankings', title: 'Rankings', focusedIcon: 'pizza' },
+      { key: 'menu', title: 'More', focusedIcon: 'menu', unfocusedIcon: 'menu' },
+    ]);
+  
+    const renderScene = BottomNavigation.SceneMap({
+      home: MusicRoute,
+      pals: AlbumsRoute,
+      rankings: RecentsRoute,
+      menu: NotificationsRoute,
+    });
+
     return (
-        <View style={styles.container}>
+        <><View style={styles.container}>
             <Text>Home Page</Text>
             {/* ...other links */}
             <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -73,10 +96,13 @@ export default function Home() {
                 <Link href="/logout" asChild>
                     <Button mode="contained">Logout</Button>
                 </Link>
-                <Text>
-                    {ratings}
-                </Text>
             </View>
         </View>
+            <BottomNavigation
+                navigationState={{ index, routes }}
+                onIndexChange={setIndex}
+                renderScene={renderScene}
+            />
+        </>
     );
 }
