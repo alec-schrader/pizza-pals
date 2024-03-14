@@ -28,8 +28,8 @@ export default function Login() {
         })
         setLoading(false)
         if (error) {
-            setDialogText(error)
-            setVisible(true)
+            setDialogText(error.message)
+            showDialog()
             return
         }
         router.replace('/')
@@ -40,7 +40,7 @@ export default function Login() {
         <>
             <Stack.Screen
                 options={{
-                    headerTitle: "Login",
+                    headerTitle: "Sign up",
                 }}
             />
 
@@ -71,7 +71,7 @@ export default function Login() {
             <Dialog visible={visible} onDismiss={hideDialog}>
                 <Dialog.Title>Alert</Dialog.Title>
                 <Dialog.Content>
-                    <Text variant="bodyMedium">{dialogText}</Text>
+                    <Text variant="bodyMedium" style={{color: 'white'}}>{dialogText}</Text>
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={hideDialog}>OK</Button>

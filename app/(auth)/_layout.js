@@ -3,6 +3,7 @@ import { useTheme } from 'react-native-paper';
 
 export default function Layout() {
     const theme = useTheme();
+    
     return <Stack
         screenOptions={{
             headerStyle: {
@@ -11,6 +12,7 @@ export default function Layout() {
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
+            contentStyle: { backgroundColor: theme.colors.backdrop },
         }}
     />;
 }

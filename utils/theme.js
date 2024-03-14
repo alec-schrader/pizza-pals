@@ -39,7 +39,7 @@ export const lightTheme = {
     },
     surfaceDisabled: "rgba(30, 27, 22, 0.12)",
     onSurfaceDisabled: "rgba(30, 27, 22, 0.38)",
-    backdrop: "rgba(53, 48, 36, 0.4)"
+    backdrop: "#5b737d"
   }
   }
 
@@ -84,6 +84,6 @@ export const lightTheme = {
       },
       surfaceDisabled: "rgba(232, 226, 217, 0.12)",
       onSurfaceDisabled: "rgba(232, 226, 217, 0.38)",
-      backdrop: "rgba(53, 48, 36, 0.4)"
+      backdrop: "#5b737d"
     }
     }

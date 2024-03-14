@@ -14,4 +14,7 @@ export const styles = StyleSheet.create({
     mt20: {
         marginTop: 20,
     },
+    centered: {
+        alignSelf: 'center'
+    }
 })

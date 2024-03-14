@@ -9,17 +9,60 @@ import { Button } from 'react-native-paper'
 
 
 export default function Home() {
-    const [session, setSession] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [ratings, setRatings] = useState('');
+    const [session, setSession] = useState(null);
 
+    async function getSession() {
+        const { data, error } = await supabase.auth.getSession();
+        return data
+    }
+    
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session)
-        })
+        async function getRatings() {
+            supabase.auth.getSession().then(({ data: { session } }) => {
+                const { data, error, status } = supabase
+                .from('User_Ratings')
+                .select('id, rating, Pizza_Properties ( id, category, subcategory, name, vegetarian, gluten_free)')
+                .eq('userid', session?.user.id).then(( data, error ) => {
+                    console.log(data, error)
+                    setRatings(JSON.stringify(data))
+                })
+            })
+        }
+    
+        if(session) return
+        getRatings()
+    }, [session, ratings])
 
-        supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session)
-        })
-    }, [])
+
+    async function getRatings(session) {
+        try {
+            await getSession()
+            console.log(session)
+            setLoading(true)
+            if (!session?.user) throw new Error('No user on the session!')
+
+            const { data, error, status } = await supabase
+                .from('User_Ratings')
+                .select('id, rating, Pizza_Properties ( id, category, subcategory, name, vegetarian, gluten_free)')
+                .eq('userid', session?.user.id)
+            if (error && status !== 406) {
+                throw error
+            }
+
+            if (data) {
+                setRatings(data)
+            }
+            console.log(data)
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log(error)
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -27,10 +70,12 @@ export default function Home() {
             {/* ...other links */}
             <View style={[styles.verticallySpaced, styles.mt20]}>
 
-            <Link href="/logout" asChild>
-                <Button mode="contained">Logout</Button>
-            </Link>
-
+                <Link href="/logout" asChild>
+                    <Button mode="contained">Logout</Button>
+                </Link>
+                <Text>
+                    {ratings}
+                </Text>
             </View>
         </View>
     );
