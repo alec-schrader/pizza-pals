@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Tabs, tabs } from 'expo-router';
 
 import { supabase } from '../../utils/supabase';
-import { Button,BottomNavigation } from 'react-native-paper'
+import { Icon, useTheme } from 'react-native-paper'
 
-export default function AuthLayout() {
+export default function PageLayout() {
+    const theme = useTheme();
+
     const [session, setSession] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
@@ -32,29 +34,69 @@ export default function AuthLayout() {
     }
 
     // This layout can be deferred because it's not the root layout.
-    return <Slot />;
-
-const MusicRoute = () => <Text>Music</Text>;
-
-const AlbumsRoute = () => <Text>Albums</Text>;
-
-const RecentsRoute = () => <Text>Recents</Text>;
-
-const NotificationsRoute = () => <Text>Notifications</Text>;
-
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-      { key: 'music', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
-      { key: 'albums', title: 'Albums', focusedIcon: 'album' },
-      { key: 'recents', title: 'Recents', focusedIcon: 'history' },
-      { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
-    ]);
-  
-    const renderScene = BottomNavigation.SceneMap({
-      music: MusicRoute,
-      albums: AlbumsRoute,
-      recents: RecentsRoute,
-      notifications: NotificationsRoute,
-    });
-
+    return <Tabs 
+        screenOptions={{
+            tabBarActiveTintColor: theme.colors.tertiary,
+            headerStyle: {
+                backgroundColor: theme.colors.primary,
+            },
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+            contentStyle: {
+                backgroundColor: theme.colors.backdrop,
+            },
+            tabBarStyle: {
+                backgroundColor: theme.colors.secondary
+            },
+        }}
+        sceneContainerStyle={{
+            backgroundColor: theme.colors.backdrop,
+        }}
+    >
+        <Tabs.Screen
+            name="home"
+            options={{
+                title: 'Home',
+                tabBarIcon: ({ color }) => <Icon
+                    source="home"
+                    color={color}
+                    size={20}
+                />,
+            }}
+        />
+        <Tabs.Screen
+            name="pals"
+            options={{
+                title: 'Pals',
+                tabBarIcon: ({ color }) => <Icon
+                    source="account-group"
+                    color={color}
+                    size={20}
+                />,
+            }}
+        />
+        <Tabs.Screen
+            name="rankings"
+            options={{
+                title: 'Rankings',
+                tabBarIcon: ({ color }) => <Icon
+                    source="pizza"
+                    color={color}
+                    size={20}
+                />,
+            }}
+        />
+        <Tabs.Screen
+            name="settings"
+            options={{
+                title: 'Settings',
+                tabBarIcon: ({ color }) => <Icon
+                    source="cog"
+                    color={color}
+                    size={20}
+                />,
+            }}
+        />
+    </Tabs>;
 }

@@ -13,3 +13,27 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: false,
   },
 });
+
+export const getSession = async function () {
+  const { data, error } = await supabase.auth.getSession();
+  return data
+}
+
+export const getRatings = async function () {
+  const session = (await supabase.auth.getSession()).data.session;
+  const data = await supabase
+    .from('User_Ratings')
+    .select('id, rating, Pizza_Properties ( id, category, subcategory, name, vegetarian, gluten_free)')
+    .eq('user_id', session?.user.id)
+
+  return data.data;
+}
+
+export const getPizzaProperties = async function () {
+  const session = (await supabase.auth.getSession()).data.session;
+  const data = await supabase
+    .from('Pizza_Properties')
+    .select('id, name, category, subcategory, vegetarian, gluten_free')
+
+  return data.data;
+}

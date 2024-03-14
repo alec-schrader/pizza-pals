@@ -83,6 +83,8 @@ export default function Login() {
                         onChangeText={(text) => setEmail(text)}
                         value={email}
                         placeholder="email@address.com"
+                        inputMode='email'
+                        autoCapitalize='none'
                     />
                 </View>
                 <View style={styles.verticallySpaced}>
