@@ -6,6 +6,8 @@ import {
 import { lightTheme, darkTheme } from '../utils/theme'
 import * as SystemUI from 'expo-system-ui';
 import { useColorScheme } from 'react-native';
+import { store } from '../redux/store'
+import { Provider } from 'react-redux'
 
 
 
@@ -21,8 +23,10 @@ export default function Root() {
     };
 
     return (
-        <PaperProvider theme={appTheme}>
-            <Slot />
-        </PaperProvider>
+        <Provider store={store}>
+            <PaperProvider theme={appTheme}>
+                <Slot />
+            </PaperProvider>
+        </Provider>
     );
 }

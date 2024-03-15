@@ -1,4 +1,4 @@
-export const darkTheme = {
+export const lightTheme = {
   colors: {
     primary: "rgb(115, 92, 0)",
     onPrimary: "rgb(255, 255, 255)",
@@ -43,7 +43,7 @@ export const darkTheme = {
   }
 }
 
-export const lightTheme = {
+export const darkTheme = {
   colors: {
     primary: "rgb(232, 195, 73)",
     onPrimary: "rgb(60, 47, 0)",

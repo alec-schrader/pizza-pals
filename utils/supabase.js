@@ -29,11 +29,3 @@ export const getRatings = async function () {
   return data.data;
 }
 
-export const getPizzaProperties = async function () {
-  const session = (await supabase.auth.getSession()).data.session;
-  const data = await supabase
-    .from('Pizza_Properties')
-    .select('id, name, category, subcategory, vegetarian, gluten_free')
-
-  return data.data;
-}
