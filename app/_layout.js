@@ -9,8 +9,6 @@ import { useColorScheme } from 'react-native';
 import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 
-
-
 export default function Root() {
     let colorScheme = useColorScheme();
     const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
